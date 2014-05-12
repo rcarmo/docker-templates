@@ -1,2 +1,2 @@
 default:
-	docker build -t rcarmo/jekyll-playground
+	docker build -t rcarmo/jekyll-playground .
