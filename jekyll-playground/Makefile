@@ -1,2 +1,2 @@
 default:
-	docker build -t rcarmo/browser-vnc .
+	docker build -t rcarmo/jekyll-playground
