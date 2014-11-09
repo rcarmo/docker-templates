@@ -35,7 +35,7 @@ git clone https://github.com/rcarmo/docker-templates
 If running a container host inside a local VM, I also do this to make it easier to SSH in from a Mac:
 
 ```
-apt-get install avahi-daemon
+apt-get install -y avahi-daemon
 cp /usr/share/doc/avahi-daemon/examples/ssh.service /etc/avahi/services/.
 ```
 
