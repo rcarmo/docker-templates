@@ -27,9 +27,18 @@ apt-get dist-upgrade -y
 apt-get autoremove
 apt-get clean
 apt-get install -y lxc-docker monit varnish vim tmux htop
+# I actually use a private repo with other templates, but you can do this:
 git clone https://github.com/rcarmo/docker-templates
 # profit!
 ```
+
+If running a container host inside a local VM, I also do this to make it easier to SSH in from a Mac:
+
+```
+apt-get install avahi-daemon
+cp /usr/share/doc/avahi-daemon/examples/ssh.service /etc/avahi/services/.
+```
+
 
 [jk]: http://jekyllrb.com/
 [gh]: https://github.com/github/pages-gem
