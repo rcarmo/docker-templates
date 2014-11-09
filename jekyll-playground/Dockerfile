@@ -5,9 +5,9 @@ ADD etc/apt/sources.list /etc/apt/sources.list
 # Ugrade to a clean slate
 RUN apt-get update; apt-get upgrade -y; apt-get clean
 # Baseline config for a CLI environment
-RUN apt-get update; apt-get upgrade -y; apt-get install -y man openssh-server htop tmux vim bash-completion rsync; apt-get clean
+RUN apt-get update; apt-get upgrade -y; apt-get install -y man openssh-server htop tmux vim bash-completion rsync; apt-get autoremove; apt-get clean
 # Add our homedir with prebuilt config files
-RUN apt-get update; apt-get upgrade -y; apt-get install -y ruby ruby-dev python-pygments; gem install jekyll github-pages jekyll-sitemap; apt-get clean
+RUN apt-get update; apt-get upgrade -y; apt-get install -y ruby ruby-dev python-pygments; gem install  github-pages jekyll-sitemap; apt-get clean
 ADD home/user /home/user
 # A shell user with sudo and a throwaway SSH key
 RUN useradd -G sudo -s /bin/bash user && chown -R user:user /home/user && sudo -u user ssh-keygen -q -t rsa -f /home/user/.ssh/id_rsa -N ""

@@ -2,12 +2,18 @@
 docker-templates
 ================
 
-A set of Docker templates (Dockerfiles and associated scripts):
+A set of Docker templates (Dockerfiles and associated scripts). These templates are optimized for [DigitalOcean][do], which is where I run most of my fire-and-forget environments.
 
 * `browser-vnc`: A minimalist desktop environment with Firefox, Openbox, `fbpanel` and the Infinality font rendering tweaks, accessible via VNC over SSH (just log in and run `vncserver` to start it, then open an SSH tunnel to 5901). Can be trivially tweaked to not use SSH at all, but this is a more generic template that can be used for other purposes.
 
+* `jekyll-playground`: A way to bootstrap a [Github Pages][ghh]/[Jekyll][jk] environment.
 
-## Bootstrapping a new Ubuntu 14.04 LTS instance on DigitalOcean:
+* `bq-prusa-i3-hephestos`: Bootstraps an Arduino development environment and builds a firmware image for the [bq Prusa i3 Hephestos][bq] 3D printer, which I'm [trying to get in working order][b1].
+
+
+## Bootstrapping a new Ubuntu 14.04 LTS Docker host on [DigitalOcean][do]:
+
+This is what I normally do when I need a fresh Ubuntu Docker host these days:
 
 ```
 # Change timezone to something sane
@@ -23,3 +29,10 @@ apt-get install lxc-docker monit varnish vim tmux htop
 git clone https://github.com/rcarmo/docker-templates
 # profit!
 ```
+
+[jk]: http://jekyllrb.com/
+[gh]: https://github.com/github/pages-gem
+[ghh]: https://help.github.com/articles/using-jekyll-with-pages/
+[do]: https://www.digitalocean.com/?refcode=5090627e4da5
+[bq]: http://www.bqreaders.com/gb/products/prusa-hephestos.html
+[b1]: http://the.taoofmac.com/space/blog/2014/11/01/1230#3d-printing-speed-bumps
