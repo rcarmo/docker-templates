@@ -7,7 +7,7 @@ A set of Docker templates (Dockerfiles and associated scripts):
 * `browser-vnc`: A minimalist desktop environment with Firefox, Openbox, `fbpanel` and the Infinality font rendering tweaks, accessible via VNC over SSH (just log in and run `vncserver` to start it, then open an SSH tunnel to 5901). Can be trivially tweaked to not use SSH at all, but this is a more generic template that can be used for other purposes.
 
 
-## Bootstrapping a new Ubuntu 14.04 LTS DigitalOcean instance:
+## Bootstrapping a new Ubuntu 14.04 LTS instance on DigitalOcean:
 
 ```
 # Change timezone to something sane
@@ -19,7 +19,7 @@ sh -c "echo deb https://get.docker.com/ubuntu docker main\
 apt-get update
 apt-get dist-upgrade
 apt-get autoremove
-apt-get install lxc-docker monit varnish tmux htop
+apt-get install lxc-docker monit varnish vim tmux htop
 # install nsenter into /usr/local/bin
 docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 git clone https://github.com/rcarmo/docker-templates
