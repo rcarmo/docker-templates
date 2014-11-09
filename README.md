@@ -20,8 +20,6 @@ apt-get update
 apt-get dist-upgrade
 apt-get autoremove
 apt-get install lxc-docker monit varnish vim tmux htop
-# install nsenter into /usr/local/bin
-docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 git clone https://github.com/rcarmo/docker-templates
 # profit!
 ```
