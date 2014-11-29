@@ -4,6 +4,8 @@ docker-templates
 
 A set of Docker templates (Dockerfiles and associated scripts). These templates are optimized for [DigitalOcean][do], which is where I run most of my fire-and-forget environments.
 
+* `dropbox-sandbox`: A sandboxed environment to run a Dropbox daemon, exposing the Dropbox directory as a Docker data volume.
+
 * `browser-vnc`: A minimalist desktop environment with Firefox, Openbox, `fbpanel` and the Infinality font rendering tweaks, accessible via VNC over SSH (just log in and run `vncserver` to start it, then open an SSH tunnel to 5901). Can be trivially tweaked to not use SSH at all, but this is a more generic template that can be used for other purposes.
 
 * `jekyll-playground`: A way to bootstrap a [Github Pages][ghh]/[Jekyll][jk] environment.
