@@ -12,6 +12,7 @@ A set of Docker templates (Dockerfiles and associated scripts). These templates 
 
 * `bq-prusa-i3-hephestos`: Bootstraps an Arduino development environment and builds a firmware image for the [bq Prusa i3 Hephestos][bq] 3D printer, which I'm [trying to get in working order][b1].
 
+* `peervpn`: A test container to run [peervpn][peervpn] (contains insecure defaults, customize at will)
 
 ## Bootstrapping a new Ubuntu 14.04 LTS Docker host on [DigitalOcean][do] and [Linode](http://www.linode.com):
 
@@ -53,3 +54,4 @@ cp /usr/share/doc/avahi-daemon/examples/ssh.service /etc/avahi/services/.
 [do]: https://www.digitalocean.com/?refcode=5090627e4da5
 [bq]: http://www.bqreaders.com/gb/products/prusa-hephestos.html
 [b1]: http://the.taoofmac.com/space/blog/2014/11/01/1230#3d-printing-speed-bumps
+[peervpn]: http://www.peervpn.net

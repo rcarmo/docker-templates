@@ -1,0 +1,371 @@
+/***************************************************************************
+ *   Copyright (C) 2015 by Tobias Volk                                     *
+ *   mail@tobiasvolk.de                                                    *
+ *                                                                         *
+ *   This program is free software: you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation, either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>. *
+ ***************************************************************************/
+
+
+struct s_initconfig {
+	char sourceip[CONFPARSER_NAMEBUF_SIZE+1];
+	char sourceport[CONFPARSER_NAMEBUF_SIZE+1];
+	char tapname[CONFPARSER_NAMEBUF_SIZE+1];
+	char userstr[CONFPARSER_NAMEBUF_SIZE+1];
+	char groupstr[CONFPARSER_NAMEBUF_SIZE+1];
+	char chrootstr[CONFPARSER_NAMEBUF_SIZE+1];
+	char networkname[CONFPARSER_NAMEBUF_SIZE+1];
+	char ifconfig4[CONFPARSER_NAMEBUF_SIZE+1];
+	char ifconfig6[CONFPARSER_NAMEBUF_SIZE+1];
+	char upcmd[CONFPARSER_NAMEBUF_SIZE+1];
+	char initpeers[CONFPARSER_NAMEBUF_SIZE+1];
+	char engines[CONFPARSER_NAMEBUF_SIZE+1];
+	char password[CONFPARSER_NAMEBUF_SIZE+1];
+	int password_len;
+	int enableindirect;
+	int enablerelay;
+	int enableeth;
+	int enablendpcache;
+	int enablevirtserv;
+	int enableipv4;
+	int enableipv6;
+	int enablenat64clat;
+	int enableprivdrop;
+	int enableseccomp;
+	int forceseccomp;
+	int enableconsole;
+	int sockmark;
+};
+
+static void throwError(char *msg) {
+	if(msg != NULL) printf("error: %s\n",msg);
+	exit(1);
+}
+
+static int isWhitespaceChar(char c) {
+	switch(c) {
+		case ' ':
+		case '\t':
+			return 1;
+		default:
+			return 0;
+	}
+}
+
+static int parseConfigInt(char *str) {
+	int n = atoi(str);
+	if(n < 0) return -1;
+	return n;
+}
+
+static int parseConfigBoolean(char *str) {
+	if(strncmp(str,"true",4) == 0) {
+		return 1;
+	}
+	else if(strncmp(str,"1",1) == 0) {
+		return 1;
+	}
+	else if(strncmp(str,"yes",3) == 0) {
+		return 1;
+	}
+	else if(strncmp(str,"false",5) == 0) {
+		return 0;
+	}
+	else if(strncmp(str,"0",1) == 0) {
+		return 0;
+	}
+	else if(strncmp(str,"no",2) == 0) {
+		return 0;
+	}
+	else {
+		return -1;
+	}
+}
+
+static int parseConfigIsEOLChar(char c) {
+	switch(c) {
+		case '#':
+		case ';':
+		case '\0':
+		case '\r':
+			return 1;
+		default:
+			return 0;
+	}
+}
+
+static int parseConfigLineCheckCommand(char *line, int linelen, const char *cmd, int *vpos) {
+	int cmdlen = strlen(cmd);
+	if(linelen >= cmdlen) {
+		if(strncmp(line,cmd,cmdlen) == 0) {
+			if(parseConfigIsEOLChar(line[cmdlen])) {
+				*vpos = cmdlen;
+				return 1;
+			}
+			else if(isWhitespaceChar(line[cmdlen])) {
+				*vpos = cmdlen;
+				while(((*vpos)+1) < linelen) {
+					if(isWhitespaceChar(line[*vpos])) {
+						*vpos = (*vpos)+1;
+					}
+					else {
+						break;
+					}
+				}
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+	else {
+		return 0;
+	}
+}
+
+static int parseConfigLine(char *line, int len, struct s_initconfig *cs) {
+	int vpos,a;
+	if(!(len > 0)) {
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"echo",&vpos)) {
+		printf("%s\n",&line[vpos]);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"local",&vpos)) {
+		strncpy(cs->sourceip,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"port",&vpos)) {
+		strncpy(cs->sourceport,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"user",&vpos)) {
+		strncpy(cs->userstr,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"group",&vpos)) {
+		strncpy(cs->groupstr,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"chroot",&vpos)) {
+		strncpy(cs->chrootstr,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"networkname",&vpos)) {
+		strncpy(cs->networkname,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"interface",&vpos)) {
+		strncpy(cs->tapname,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"ifconfig4",&vpos)) {
+		strncpy(cs->ifconfig4,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"ifconfig6",&vpos)) {
+		strncpy(cs->ifconfig6,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"upcmd",&vpos)) {
+		strncpy(cs->upcmd,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"initpeers",&vpos)) {
+		strncpy(cs->initpeers,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"engine",&vpos)) {
+		strncpy(cs->engines,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"psk",&vpos)) {
+		strncpy(cs->password,&line[vpos],CONFPARSER_NAMEBUF_SIZE);
+		cs->password_len = strlen(cs->password);
+		return 1;
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enableconsole",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableconsole = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enableseccomp",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableseccomp = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"forceseccomp",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->forceseccomp = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enableprivdrop",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableprivdrop = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enabletunneling",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableeth = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enablendpcache",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enablendpcache = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enablevirtserv",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enablevirtserv = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enablerelay",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enablerelay = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enableipv4",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableipv4 = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enableipv6",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enableipv6 = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"enablenat64clat",&vpos)) {
+		if((a = parseConfigBoolean(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->enablenat64clat = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"sockmark",&vpos)) {
+		if((a = parseConfigInt(&line[vpos])) < 0) {
+			return -1;
+		}
+		else {
+			cs->sockmark = a;
+			return 1;
+		}
+	}
+	else if(parseConfigLineCheckCommand(line,len,"endconfig",&vpos)) {
+		return 0;
+	}
+	else {
+		return -1;
+	}
+}
+
+static void parseConfigFile(int fd, struct s_initconfig *cs) {
+	char line[CONFPARSER_LINEBUF_SIZE+1];
+	char c;
+	int linepos = 0;
+	int linectr = 0;
+	int waiteol = 0;
+	int rc;
+	int readlen;
+	do {
+		readlen = read(fd,&c,1);
+		if(!(readlen > 0)) {
+			c = '\n';
+		}
+		if(c == '\n') {
+			linectr++;
+			while(linepos > 0) {
+				if(isWhitespaceChar(line[linepos-1])) {
+					linepos--;
+				}
+				else {
+					break;
+				}
+			}
+			line[linepos] = '\0';
+			rc = parseConfigLine(line,linepos,cs);
+			if(rc < 0) {
+				printf("error: config file parse error at line %d!\n", linectr); 
+				throwError(NULL);
+			}
+			if(rc == 0) break;
+			linepos = 0;
+			waiteol = 0;
+		}
+		else {
+			if((!waiteol) && (!(linepos == 0 && isWhitespaceChar(c)))) {
+				if(parseConfigIsEOLChar(c)) {
+					line[linepos] = '\0';
+					waiteol = 1;
+				}
+				else {
+					if(linepos < (CONFPARSER_LINEBUF_SIZE)) {
+						line[linepos] = c;
+						linepos++;
+					}
+					else {
+						line[linepos] = '\0';
+						waiteol = 1;
+					}
+				}
+			}
+		}
+	}
+	while(readlen > 0);
+}
