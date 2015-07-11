@@ -1,2 +1,3 @@
 peervpn/src/* linguist-vendored
-screenshot-service/app/* linguist-vendored
+*.sh linguist-vendored
+*.js linguist-vendored
