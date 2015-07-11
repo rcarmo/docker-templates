@@ -10,3 +10,6 @@ RUN apt-get update; apt-get upgrade -y; apt-get install -y python-software-prope
 RUN apt-get update; apt-get install -y nodejs npm
 # Fix node for root
 RUN ln -s /usr/bin/nodejs /usr/bin/node
+# Install NPM modules
+RUN npm install -g async eslint grunt grunt-cli grunt-bower-task grunt-bump grunt-contrib-clean grunt-contrib-compass grunt-contrib-compress grunt-contrib-concat grunt-contrib-connect grunt-contrib-copy grunt-contrib-cssmin grunt-contrib-jshint grunt-contrib-qunit grunt-contrib-uglify grunt-contrib-watch grunt-lib-phantomjs inkdoc jit-grunt phantomjs
+RUN npm install -g bower bower-config bower-logger font-awesome animate.css
