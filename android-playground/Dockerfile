@@ -22,7 +22,7 @@ RUN curl -L ${GRADLE_URL} -o /tmp/gradle-2.3-all.zip && unzip /tmp/gradle-2.3-al
 ENV GRADLE_HOME /usr/local/gradle-2.3
 
 # Download and untar SDK
-ENV ANDROID_SDK_URL http://dl.google.com/android/android-sdk_r24.0.2-linux.tgz
+ENV ANDROID_SDK_URL http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
 RUN curl -L ${ANDROID_SDK_URL} | tar xz -C /usr/local
 ENV ANDROID_HOME /usr/local/android-sdk-linux
 
@@ -34,7 +34,7 @@ RUN echo y | ${ANDROID_HOME}/tools/android update sdk --no-ui --all --filter "${
 ENV PATH $PATH:${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:${GRADLE_HOME}/bin
 
 # Download and Unzip Android Studio
-ENV ANDROID_STUDIO_URL https://dl.google.com/dl/android/studio/ide-zips/1.1.0/android-studio-ide-135.1740770-linux.zip
+ENV ANDROID_STUDIO_URL https://dl.google.com/dl/android/studio/ide-zips/1.4.1.0/android-studio-ide-141.2343393-linux.zip
 RUN curl -L ${ANDROID_STUDIO_URL} -o /tmp/android-studio-ide.zip && unzip /tmp/android-studio-ide.zip -d /usr/local && rm /tmp/android-studio-ide.zip
 ENV ANDROID_STUDIO_HOME /usr/local/android-studio
 
