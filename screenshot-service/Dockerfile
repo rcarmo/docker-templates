@@ -1,4 +1,4 @@
-FROM rcarmo/phantomjs
+FROM rcarmo/phantomjs:2.1
 MAINTAINER rcarmo
 ADD app /app
 USER www-data
