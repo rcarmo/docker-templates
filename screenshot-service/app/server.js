@@ -11,6 +11,10 @@ fs.makeDirectory(staticRoot);
 
 app.use(Routes.static(staticRoot));
 
+app.get('/',function(req,res) {
+    res.send("", 200);
+});
+
 app.use(function(req,res,next){
     if(req.post.width && req.post.height){
         if(isNaN(parseInt(req.post.width)) && isNaN(parseInt(req.post.height))){
