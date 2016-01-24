@@ -114,17 +114,22 @@ var Routes = (function() {
  
     R.static = function(root) {
         var fs = require('fs'),
-            root = fs.absolute(root);
+            root = fs.absolute(root),
+            mimes = {jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", png: "image/png", html: "text/html", htm: "text/html"};
  
         return function(req, res, next) {
             if (req.method != 'GET') return next();
  
             var resource = req.url.slice(1),
                 path = root + '/' + resource;
- 
+
             if (resource && fs.isFile(path) && fs.isReadable(path)) {
-                var file = fs.read(path);
-                res.send(file);
+                res.header("Content-Type", mimes[path.split('.').pop().toLowerCase()]);
+                res.header("Content-Length", fs.size(path).toString());
+                res.res.setEncoding('binary');
+                res.close(fs.read(path,'b'));
+            } else if(resource) {
+                res.send("File not found", 404);
             } else {
                 next();
             }
