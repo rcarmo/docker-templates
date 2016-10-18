@@ -5,7 +5,7 @@ ADD etc/apt/sources.list /etc/apt/sources.list
 # Ugrade to a clean slate
 RUN apt-get update; apt-get upgrade -y; apt-get clean
 # Baseline config for a CLI environment
-RUN apt-get update; apt-get upgrade -y; apt-get install -y man openssh-server htop tmux vim bash-completion rsync sudo wget silversearcher-ag; apt-get autoremove; apt-get clean
+RUN apt-get update; apt-get upgrade -y; apt-get install -y man openssh-server htop tmux vim bash-completion rsync git sudo wget silversearcher-ag; apt-get autoremove; apt-get clean
 # X11 and web fonts
 RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections; apt-get install -y vnc4server lxterminal fbpanel lxappearance elementary-icon-theme fonts-noto fonts-roboto fonts-liberation ttf-mscorefonts-installer ssh-askpass pcmanfm leafpad openbox xcursor-themes lib32stdc++6; apt-get clean
 # Infinality
