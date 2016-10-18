@@ -1,8 +1,16 @@
 [![Stories in Ready](https://badge.waffle.io/rcarmo/docker-templates.png?label=ready&title=Ready)](https://waffle.io/rcarmo/docker-templates)
-docker-templates
-================
+# docker-templates
 
-A set of Docker templates (Dockerfiles and associated scripts). These templates are optimized for [DigitalOcean][do], which is where I run most of my fire-and-forget environments.
+A set of Docker templates (Dockerfiles and associated scripts). 
+
+## New Arrivals
+
+* `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a coplete set of CLI tools and Visual Studio Code.
+* `desktop-chrome`: The base for the above, containing Google Chrome, a resizable VNC server and a complete desktop environment.
+
+## Older Stuff
+
+Some of these templates are optimized for [DigitalOcean][do].
 
 * `ink-builder`: A sandboxed environment to run the build tools for [Ink](https://github.com/sapo/Ink), because I can't abide putting up with it on the Mac.
 
