@@ -48,7 +48,7 @@ No need to use SSH, no VNC authentication. Great for trying it out -- but a bad 
 
 ## Security Considerations
 
-Please note that *this container exposes port 5901*. I ordinarily use VNC exclusively over SSH, but Windows users may not have SSH installed or trouble setting up the tunnel, so I decided to `EXPOSE` the port.
+Please note that *this container exposes port 5901*. I ordinarily use VNC exclusively over SSH, but Windows users may not have SSH installed or have trouble setting up the tunnel, so I decided to `EXPOSE` the port. Docker for Windows seems to only bind it locally, but your mileage may vary.
 
 Also, the `quickstart.sh` script should not be considered as a best practice -- if you're going to leave this running someplace, best do it properly.
 
