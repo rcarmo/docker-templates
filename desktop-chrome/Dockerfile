@@ -11,7 +11,7 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
 # Infinality
 RUN apt-get install -y software-properties-common; add-apt-repository ppa:no1wantdthisname/ppa; apt-get update; apt-get install -y fontconfig-infinality; cd /etc/fonts/infinality; bash ./infctl.sh setstyle osx; apt-get clean
 # Chrome
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp/ && dpkg -i /tmp/google-chrome-stable_current_amd64.deb || true && apt-get install -fy
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp/ && dpkg -i /tmp/google-chrome-stable_current_amd64.deb || true && apt-get install -fy && rm -f /tmp/google-chrome-stable_current_amd64.deb
 RUN sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox /' /usr/share/applications/google-chrome.desktop 
 # Add our homedir with prebuilt config files
 ADD home/user /home/user

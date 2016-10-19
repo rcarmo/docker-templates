@@ -2,6 +2,9 @@
 PASSWD="/home/user/.vnc/passwd"
 SETTINGS="-depth 16 -geometry 1024x768 -geometry 1280x800 -geometry 1366x768 -geometry 1600x1200 -geometry 1280x720 -geometry 1920x1080 -geometry 2048x1536"
 AUTHMODE=" "
+# cleanup /tmp
+rm -rf /tmp/.X*
+rm -rf /tmp/ssh-*
 # set password to "changeme"
 echo "MPTcXfgXGiY=" | base64 -d > $PASSWD
 chown user:user $PASSWD
