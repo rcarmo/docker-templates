@@ -3,7 +3,7 @@ default:
 	docker build -t $(IMAGE_NAME) .
 
 run:
-	docker run -d -p 2211:22 $(IMAGE_NAME)
+	docker run -d -p 5900:5901 $(IMAGE_NAME) /quickstart.sh
 
 rmi:
 	docker rmi -f $(IMAGE_NAME)
