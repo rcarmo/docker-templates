@@ -5,7 +5,7 @@ A set of Docker templates (Dockerfiles and associated scripts).
 
 ## New Arrivals
 
-* `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a coplete set of CLI tools and Visual Studio Code.
+* `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a complete set of CLI tools and Visual Studio Code.
 * `desktop-chrome`: The base for the above, containing Google Chrome, a resizable VNC server and a complete desktop environment.
 
 ## Older Stuff
