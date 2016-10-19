@@ -1,11 +1,10 @@
-[![Stories in Ready](https://badge.waffle.io/rcarmo/docker-templates.png?label=ready&title=Ready)](https://waffle.io/rcarmo/docker-templates)
 # docker-templates
 
 A set of Docker templates (Dockerfiles and associated scripts). 
 
 ## New Arrivals
 
-* `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a complete set of CLI tools and Visual Studio Code.
+* `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a complete set of CLI tools and Visual Studio Code - [moved to a separate repository](https://github.com/rcarmo/azure-toolbox)
 * `desktop-chrome`: The base for the above, containing Google Chrome, a resizable VNC server and a complete desktop environment.
 
 ## Older Stuff
@@ -23,40 +22,6 @@ Some of these templates are optimized for [DigitalOcean][do].
 * `bq-prusa-i3-hephestos`: Bootstraps an Arduino development environment and builds a firmware image for the [bq Prusa i3 Hephestos][bq] 3D printer, which I'm [trying to get in working order][b1].
 
 * `peervpn`: A test container to run [peervpn][peervpn] (contains insecure defaults, customize at will)
-
-## Bootstrapping a new Ubuntu 14.04 LTS Docker host on [DigitalOcean][do] and [Linode](http://www.linode.com):
-
-This is what I normally do when I need a fresh Ubuntu Docker host these days. 
-
-```
-# Change timezone to something sane
-sudo dpkg-reconfigure tzdata
-# Install the latest Docker version
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-sudo sh -c "echo deb https://get.docker.com/ubuntu docker main\
-> /etc/apt/sources.list.d/docker.list"
-sudo apt-get update
-sudo apt-get dist-upgrade -y
-sudo apt-get autoremove
-sudo apt-get clean
-sudo apt-get install -y lxc-docker monit varnish vim tmux htop
-# now make sure we can invoke docker without sudo
-sudo groupadd docker
-sudo gpasswd -a ${USER} docker
-sudo service docker restart
-newgrp docker
-# I actually use a private repo with other templates, but you can do this:
-git clone https://github.com/rcarmo/docker-templates
-# profit!
-```
-
-If running a container host inside a local VM, I also do this to make it easier to SSH in from a Mac:
-
-```
-apt-get install -y avahi-daemon
-cp /usr/share/doc/avahi-daemon/examples/ssh.service /etc/avahi/services/.
-```
-
 
 [jk]: http://jekyllrb.com/
 [gh]: https://github.com/github/pages-gem
