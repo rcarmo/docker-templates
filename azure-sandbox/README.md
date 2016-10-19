@@ -18,9 +18,11 @@ Login via SSH to port 2211 as `user`, password `changeme`. Once inside, `remote.
 
 ## Quickstart (NO AUTHENTICATION!)
 
-    docker run -d -p 5901:5901 rcarmo/azure-sandbox /quickstart.sh
+    docker run -d -p 5901:5901 rcarmo/azure-sandbox /quickstart.sh noauth
 
 No need to use SSH, no VNC authentication. Great for trying it out -- but a bad idea if you expose Docker ports outside your machine.
+
+If you're using a Mac, then don't use `noauth` and type `changeme` as a VNC password (the built-in VNC client rightfully dislikes null authentication options).
 
 ## Typical Session (via SSH)
 
@@ -50,7 +52,7 @@ No need to use SSH, no VNC authentication. Great for trying it out -- but a bad 
 
 Just mount a data volume and work inside it. For instance, in Windows:
 
-    docker run -d -p 5901:5901 -v c:/Users/billg/Development:/home/user/Development rcarmo/azure-sandbox /quickstart.sh
+    docker run -d -p 5901:5901 -v c:/Users/billg/Development:/home/user/Development rcarmo/azure-sandbox /quickstart.sh noauth
 
 Preserving browser and editor settings is also doable. Just mount another volume as `/home/user/.config` and you should be set (it's probably best to copy the existing settings across first).
 
@@ -62,7 +64,7 @@ Please note that *this container exposes port 5901*. I ordinarily use VNC exclus
 
 Also, the `quickstart.sh` script should not be considered as a best practice -- if you're going to leave this running someplace, best do it properly.
 
-If you don't use `quickstart.sh` the VNC server will prompt for a password, but that's hardly secure in practice - so if you run this container on a machine exposed to the Internet, _don't_ publish port 5901.
+If you don't pass `noauth` to `quickstart.sh` the VNC server will prompt for a password (which is `changeme` too), but that's hardly secure in practice - so if you run this container on a machine exposed to the Internet, _don't_ publish port 5901.
 
 [a]: http://azure.microsoft.com
 [xcli]: https://github.com/azure/azure-xplat-cli
