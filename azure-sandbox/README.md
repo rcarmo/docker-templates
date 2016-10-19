@@ -46,6 +46,16 @@ No need to use SSH, no VNC authentication. Great for trying it out -- but a bad 
     $
     # you can now VNC to localhost:5901
 
+## Preserving Your Work
+
+Just mount a data volume and work inside it. For instance, in Windows:
+
+    docker run -d -p 5901:5901 -v c:/Users/billg/Development:/home/user/Development rcarmo/azure-sandbox /root/quickstart.sh
+
+Preserving browser and editor settings is also doable. Just mount another volume as `/home/user/.config` and you should be set (it's probably best to copy the existing settings across first).
+
+[Visual Studio Code][vc] stores its settings in `~/.vscode`, so you can also mount that onto a host path (mind you, sharing configuration files with your host is not necessarily a good idea).
+
 ## Security Considerations
 
 Please note that *this container exposes port 5901*. I ordinarily use VNC exclusively over SSH, but Windows users may not have SSH installed or have trouble setting up the tunnel, so I decided to `EXPOSE` the port. Docker for Windows seems to only bind it locally, but your mileage may vary.
