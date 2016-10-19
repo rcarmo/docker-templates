@@ -5,10 +5,12 @@ AUTHMODE=" "
 # cleanup /tmp
 rm -rf /tmp/.X*
 rm -rf /tmp/ssh-*
-# set password to "changeme"
+# set password to "changeme" if not set already
+if [ ! -f $PASSWD ]; then
 echo "MPTcXfgXGiY=" | base64 -d > $PASSWD
 chown user:user $PASSWD
 chmod 600 $PASSWD
+fi
 for i in "$@"
 do
 case $i in
