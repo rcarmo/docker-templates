@@ -6,7 +6,9 @@ A minimalist desktop environment containing:
 
 * An Ubuntu 16.04 (Xenial) userland
 * A simple Openbox/(`fbpanel`) desktop you can access over VNC
-* Google chrome
+* The Infinality font rendering engine
+* Google Chrome
+* Optionally, with the (`:tiger` tag): TigerVNC Server, for a dynamically resizable desktop
 
 ## Logging In
 
