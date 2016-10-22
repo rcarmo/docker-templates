@@ -14,7 +14,8 @@ rmi:
 	docker rmi -f $(IMAGE_NAME)
 
 push:
-	docker push $(IMAGE_NAME)
+	-docker push $(IMAGE_NAME)
+	-docker push $(IMAGE_NAME):tiger
 
 clean:
 	-docker rm -v $$(docker ps -a -q -f status=exited)
