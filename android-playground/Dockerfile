@@ -1,4 +1,4 @@
-FROM rcarmo/browser-vnc
+FROM rcarmo/desktop-chrome
 MAINTAINER rcarmo
 # loosely based on https://github.com/samtstern/android-vagrant and https://github.com/dockerfile/java/blob/master/oracle-java8
 
