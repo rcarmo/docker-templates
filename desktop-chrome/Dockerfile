@@ -85,7 +85,7 @@ COPY ./root/quickstart.sh /quickstart.sh
 
 # Filesystem cleanups
 RUN \
-  rm -rf /var/lib/apt/lists/* \
+  rm -rf /var/lib/apt/lists/* && \
   chmod +x /quickstart.sh && \
   mkdir -p /var/run/sshd && \
   chmod 755 /var/run/sshd && \

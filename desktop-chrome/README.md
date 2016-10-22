@@ -12,7 +12,7 @@ A minimalist desktop environment containing:
 
 ## Logging In
 
-Login via SSH to port 2211 as `user`, password `changeme`. Once inside, `remote.sh` will launch the VNC server with a set of predefined resolutions (use `xrandr -s <number>` to resize the desktop - some VNC clients may need to reconnect, but TigerVNC seems to work fine in Windows, and so does the macOS VNC client)
+Login via SSH to port 2211 as `user`, password `changeme`. Once inside, `remote.sh` will launch the VNC server with a set of predefined resolutions (use `xrandr -s <resolution>` to resize the desktop - some VNC clients may need to reconnect, but TigerVNC seems to work fine in Windows, and so does the macOS VNC client)
 
 ## Quickstart (NO AUTHENTICATION!)
 
