@@ -4,8 +4,7 @@ default:
 	docker build -t $(IMAGE_NAME):latest -f Dockerfile .
 
 tiger:
-	docker build -t $(IMAGE_NAME):tiger -f Dockerfile.tiger .
-	docker push $(IMAGE_NAME):tiger
+	docker build -t $(IMAGE_NAME):tiger -f Dockerfile_tiger .
 
 run:
 	docker run -d -p 2211:22 $(IMAGE_NAME)
