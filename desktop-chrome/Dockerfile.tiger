@@ -1,0 +1,3 @@
+FROM rcarmo/desktop-chrome
+COPY ./root/tigervnc.sh /root/tigervnc.sh
+RUN chmod +x /root/tigervnc.sh && bash /root/tigervnc.sh 

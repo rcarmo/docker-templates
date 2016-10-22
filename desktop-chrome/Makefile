@@ -1,7 +1,11 @@
 export PORT=8000
 export IMAGE_NAME=rcarmo/desktop-chrome
 default:
-	docker build -t $(IMAGE_NAME) .
+	docker build -t $(IMAGE_NAME):latest -f Dockerfile .
+
+tiger:
+	docker build -t $(IMAGE_NAME):tiger -f Dockerfile.tiger .
+	docker push $(IMAGE_NAME):tiger
 
 run:
 	docker run -d -p 2211:22 $(IMAGE_NAME)
