@@ -5,6 +5,7 @@ AUTHMODE=" "
 # cleanup /tmp
 rm -rf /tmp/.X*
 rm -rf /tmp/ssh-*
+rm -f /home/user/.vnc/*.log
 # set password to "changeme" if not set already
 if [ ! -f $PASSWD ]; then
 echo "MPTcXfgXGiY=" | base64 -d > $PASSWD
