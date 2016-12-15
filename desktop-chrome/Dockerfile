@@ -66,7 +66,7 @@ RUN \
   dpkg -i /tmp/google-chrome-stable_current_amd64.deb || true && \
   apt-get install -fy && \
   rm -f /tmp/google-chrome-stable_current_amd64.deb && \
-  sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox /' /usr/share/applications/google-chrome.desktop 
+  sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox /g' /usr/share/applications/google-chrome.desktop 
 
 # Add our homedir with prebuilt config files
 ADD home/user /home/user
