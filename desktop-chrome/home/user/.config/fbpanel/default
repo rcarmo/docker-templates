@@ -203,7 +203,7 @@ Plugin {
 	button {
             icon = web-browser
             tooltip = Web Browser
-            action = x-www-browser
+            action = firefox
     	}
     }
 }
