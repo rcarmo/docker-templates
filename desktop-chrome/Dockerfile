@@ -15,6 +15,7 @@ RUN \
 # Baseline config for a CLI environment
 RUN \
   apt-get install -y \
+    apt-transport-https \
     bash-completion \
     curl \
     openssh-server \
