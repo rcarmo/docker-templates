@@ -7,7 +7,6 @@ ENV __FLUSH_LOG 1
 ADD etc/apt/sources.list /etc/apt/sources.list
 
 # Ugrade to a clean slate
-<<<<<<< HEAD
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y \
