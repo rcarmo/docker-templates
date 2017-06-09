@@ -9,9 +9,12 @@ tiger:
 run:
 	docker run -d -p 2211:22 $(IMAGE_NAME)
 
+<<<<<<< HEAD
 vnc:
 	docker run -d -p 5901:5901 $(IMAGE_NAME) /quickstart.sh
 
+=======
+>>>>>>> 0971c9dd8bcfca29231ea4de765241bbe824b80f
 rmi:
 	docker rmi -f $(IMAGE_NAME)
 

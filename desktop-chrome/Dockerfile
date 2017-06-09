@@ -7,6 +7,7 @@ ENV __FLUSH_LOG 1
 ADD etc/apt/sources.list /etc/apt/sources.list
 
 # Ugrade to a clean slate
+<<<<<<< HEAD
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y \
@@ -92,5 +93,6 @@ RUN rm -rf /var/lib/apt/lists/* \
  && mkdir -p /var/run/sshd \
  && chmod 755 /var/run/sshd \
  && /usr/sbin/sshd
+
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
