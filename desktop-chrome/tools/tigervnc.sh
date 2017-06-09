@@ -1,6 +1,6 @@
 #!/bin/bash
-TARBALL=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.7.1.x86_64.tar.gz
-CHECKSUM=cdb2df7d96c6acca62e01deceee3ea1c8468606064cc51a162da413e0dd2cff5
+TARBALL=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.8.0.x86_64.tar.gz
+CHECKSUM=be6b51016c27cbc854c37ec5379bd89d74d15387bf103ff7cd1c8c2924f164a7
 cd /tmp
 SHA256SUM=`wget -O - $TARBALL | tee dist.tgz | sha256sum | cut -d\  -f 1`
 if [ $SHA256SUM = $CHECKSUM ]; then
