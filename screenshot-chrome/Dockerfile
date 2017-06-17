@@ -53,6 +53,8 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* 
 
+ADD / rootfs
+
 # Install Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb \
  && dpkg -i /tmp/chrome.deb \
