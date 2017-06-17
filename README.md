@@ -4,6 +4,7 @@ A set of Docker templates (Dockerfiles and associated scripts).
 
 ## New Arrivals
 
+* `screenshot-chrome`: A revamp of `screenshot-service` to take advantage of the new Chrome headless mode
 * `azure-sandbox`: A sandboxed environment to develop Azure solutions, containing a complete set of CLI tools and Visual Studio Code - [moved to a separate repository](https://github.com/rcarmo/azure-toolbox)
 * `desktop-chrome`: The base for the above, containing Google Chrome, a resizable VNC server and a complete desktop environment.
 
