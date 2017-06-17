@@ -6,6 +6,7 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
  && apt-get update -y \
  && apt-get dist-upgrade -y \
  && apt-get install -y \
+    apt-transport-https \
 	ca-certificates \
 	fonts-liberation \
 	fonts-noto \
