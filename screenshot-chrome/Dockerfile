@@ -1,9 +1,8 @@
 FROM ubuntu:16.04
 MAINTAINER rcarmo
 
-# Base packages, including useful fonts
-RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
- && apt-get update -y \
+# Base packages
+RUN apt-get update -y \
  && apt-get dist-upgrade -y \
  && apt-get install -y \
     apt-transport-https \
@@ -34,7 +33,6 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
 	lsb-base \
 	software-properties-common \
 	strace \
-	ttf-mscorefonts-installer \
 	wget \
 	xdg-utils \
  && locale-gen en_US.UTF-8 \
@@ -42,10 +40,13 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# Install Infinality
-RUN add-apt-repository ppa:no1wantdthisname/ppa \
+# Install Infinality and web fonts
+RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
+ && add-apt-repository ppa:no1wantdthisname/ppa \
  && apt-get update \
- && apt-get install -y fontconfig-infinality \
+ && apt-get install -y \
+    fontconfig-infinality \
+	ttf-mscorefonts-installer \
  && cd /etc/fonts/infinality \
  && bash ./infctl.sh setstyle osx \
  && apt-get autoremove -y \
@@ -61,9 +62,10 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
  && rm -rf /var/lib/apt/lists/*
 
 # Install other tools (move these to initial install when image is stable)
-RUN add-apt-repository universe\
+RUN apt-get update \
  && apt-get install -y \
- && pngquant \
+    pngquant \
+	jpegoptim \
  && rm -rf /var/lib/apt/lists/* 
 
 ENTRYPOINT [ "google-chrome" ]
