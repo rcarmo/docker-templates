@@ -12,22 +12,22 @@ RUN DEBIAN_FRONTEND=noninteractive \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN adduser --disabled-password --gecos "" -u 1001 user \
+RUN useradd -m -d / -s /usr/sbin/nologin -g users -u 1001 user \
  && wget -O /usr/local/bin/dropbox "https://www.dropbox.com/download?dl=packages/dropbox.py" \
- && chmod +x /usr/local/bin/dropbox
+ && chmod +x /usr/local/bin/dropbox \
+ && mkdir -p /Dropbox /.dropbox-dist /.dropbox \
+ && chown user:users /Dropbox /.dropbox-dist /.dropbox
 
 USER user
-RUN cd \
- && wget -O db.tar.gz "https://www.dropbox.com/download/?plat=lnx.x86_64" \
- && tar -zxvf db.tar.gz \
- && rm db.tar.gz
+RUN cd / \
+ && wget -O /tmp/db.tar.gz "https://www.dropbox.com/download/?plat=lnx.x86_64" \
+ && tar -zxvf /tmp/db.tar.gz \
+ && rm /tmp/db.tar.gz
  
 # Expose the Dropbox directory as a Docker volume
-VOLUME ["/home/user/Dropbox"]
+VOLUME ["Dropbox"]
 
-# Disable LAN sync (saves you the time to docker exec inside and do it yourself)
-RUN dropbox start && dropbox lansync n
-CMD ["/home/user/.dropbox-dist/dropboxd"]
+CMD ["/.dropbox-dist/dropboxd"]
 
 ARG VCS_REF
 ARG VCS_URL

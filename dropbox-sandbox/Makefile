@@ -18,4 +18,8 @@ push:
 	docker push $(IMAGE_NAME)
 
 test:
-	docker run -ti $(IMAGE_NAME)
+	docker run \
+		--name=dropbox \
+		-v /tmp/data:/Dropbox \
+		--net=host \
+		$(IMAGE_NAME)
