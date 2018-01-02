@@ -1,14 +1,37 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER rcarmo
-# Copy our DigitalOcean sources.list across
-ADD etc/apt/sources.list /etc/apt/sources.list
+
 # Ugrade to a clean slate and install the basics we need to install and run Dropbox
-RUN apt-get update; apt-get upgrade -y; apt-get install -y wget python; apt-get autoremove; apt-get clean
-RUN mkdir /home/dropbox && useradd -s /bin/bash dropbox && cd /home/dropbox && wget -O db.tar.gz "https://www.dropbox.com/download/?plat=lnx.x86_64" && tar -zxvf db.tar.gz && rm db.tar.gz && chown -R dropbox:dropbox /home/dropbox && echo 'dropbox:changeme' | chpasswd 
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update \
+ && apt-get dist-upgrade -y \
+ && apt-get autoremove -y \
+ && apt-get install -y \
+        wget \
+        python \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN adduser --disabled-password --gecos "" -u 1001 user \
+ && wget -O /usr/local/bin/dropbox "https://www.dropbox.com/download?dl=packages/dropbox.py" \
+ && chmod +x /usr/local/bin/dropbox
+
+USER user
+RUN cd \
+ && wget -O db.tar.gz "https://www.dropbox.com/download/?plat=lnx.x86_64" \
+ && tar -zxvf db.tar.gz \
+ && rm db.tar.gz
+ 
 # Expose the Dropbox directory as a Docker volume
-VOLUME ["/home/dropbox/Dropbox"]
-RUN wget -O /usr/local/bin/dropbox "https://www.dropbox.com/download?dl=packages/dropbox.py" && chmod +x /usr/local/bin/dropbox
-USER dropbox
+VOLUME ["/home/user/Dropbox"]
+
 # Disable LAN sync (saves you the time to docker exec inside and do it yourself)
 RUN dropbox start && dropbox lansync n
-CMD ["/home/dropbox/.dropbox-dist/dropboxd"]
+CMD ["/home/user/.dropbox-dist/dropboxd"]
+
+ARG VCS_REF
+ARG VCS_URL
+ARG BUILD_DATE
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url=$VCS_URL \
+      org.label-schema.build-date=$BUILD_DATE
